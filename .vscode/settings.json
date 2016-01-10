@@ -447,10 +447,10 @@
 	//-------- TypeScript configuration --------
 
 	// Complete functions with their parameter signature.
-	"typescript.useCodeSnippetsOnMethodSuggest": false,
+	"typescript.useCodeSnippetsOnMethodSuggest": true,
 
 	// Specifies the folder path containing the tsserver and lib*.d.ts files to use.
-	"typescript.tsdk": null,
+	"typescript.tsdk": "F:/ProjectCentre/NodejsSample/scripts/Typing/node.d.ts",
 
 
 	//-------- PHP Configuration options --------

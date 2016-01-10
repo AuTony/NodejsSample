@@ -1,0 +1,24 @@
+{
+  "name": "customerapi",
+  "version": "1.0.0",
+  "description": "customer data center ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AuTony/NodejsSample.git"
+  },
+  "author": "Tony Huang",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/AuTony/NodejsSample/issues"
+  },
+  "homepage": "https://github.com/AuTony/NodejsSample#readme",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.3",
+    "mongoose": "^4.3.4"
+  }
+}
