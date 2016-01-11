@@ -4,15 +4,6 @@ var custSchema = require('../models/customer.js');
 
 mongoDrv.connect(DBConnectionStr);   // connect to mongoDB
 
-//var db = mongoDrv.Connection; // get the connection
-//db.on('error', console.error.bind(console, 'Connection error:'));
-//db.on('open', function () { console.log("DB connected on: %s", DBConnectionStr) });
-/*
-if (db == 'undefined') {
-    console.log("Cannot connect to database: %s", DBConnectionStr);
-    process.exit(1);
-}*/
-
 var CustModel = mongoDrv.model('customer', custSchema);
 
 exports.GetCustomer = function(req, resp) {
