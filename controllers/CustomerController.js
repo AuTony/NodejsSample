@@ -70,6 +70,7 @@ exports.PostCustomer = function(req, res) {
     });
 };
 
+// create endpoint /api/customer/:GivenName for DELETE
 exports.DeleteCustomer = function(req,resp) {
     CustModel.remove({"GivenName": req.params.GivenName},function(err,res){
       if (err){
@@ -81,6 +82,7 @@ exports.DeleteCustomer = function(req,resp) {
     });
 };
 
+// create endpoint /api/customer/:GivenName for PUT
 exports.PutCustomer = function(req,resp) {
     CustModel.findOneAndUpdate({"GivenName": req.body.GivenName}, req.body, {new: true},function(error, cust) {
         if (error) {
