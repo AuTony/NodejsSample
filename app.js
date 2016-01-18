@@ -1,18 +1,32 @@
-var path = require('path'); //Load 'path' the File base module 
-var bodyParser = require('body-parser');
-var express = require('express'); //Load express module
-var custController = require('./controllers/CustomerController');
-//var custSchema = require('./models/customer')
+var path            = require('path'); //Load 'path' the File base module 
+var bodyParser      = require('body-parser');
+var express         = require('express'); //Load express module
+var morgan          = require('morgan');
+var passport        = require('passport');
+var config          = require('./config/config');
+var custController  = require('./controllers/customerController');
+var accountController  = require('./controllers/accountsController');
 
 var app = express(); 				//The Express object
+
+// Use environment defined port or 1688
+//var port = process.env.PORT || 1688;
+//var communicationPort = 1688;
+
 // Use the body-parser package in our application
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-
-//app.use(require('connect').bodyParser());
-
 app.use(bodyParser.json());
+
+// log to console
+app.use(morgan('dev'));
+
+app.get('/', function(req,res){
+    res.send('Hello! The API is at http://localhost:'+config.port+'/api. You have to use the following link to login before using it: http://localhost:'+config.port+'/login');
+});
+
+require('./controllers/auth')(passport);
 
 var router = express.Router();		//The Express router
 
@@ -29,49 +43,21 @@ router.route('/customer')
     .get(custController.GetCustomers)
     .put(custController.PutCustomer);
 
-router.route('/customer/:GivenName')
+router.route('/customer/:id')
     .get(custController.GetCustomer)
     .delete(custController.DeleteCustomer);
-  //.put(custController.putBeer)
-  //.delete(beerController.deleteBeer);*/
-  
- /*router.route('/customer')
-    .post(function(req,res){
-        var cust = new custController.CustModel();
-        cust.Title = req.body.Title;
-        cust.GivenName = req.body.GivenName;
-        cust.MiddleName = req.body.MiddleName;
-        cust.Surname = req.body.Surname;
-        cust.Education = req.body.Education;
-        cust.Email = req.body.Email;
     
-        cust.save(function(err) {
-        if (err)
-            res.send(err);
+router.route('/user')
+    .post(accountController.PostUser)
+    .get(accountController.GetUsers);
         
-        res.json({ message: 'customer is added to database', data: req.body});
-    })
-    })
-    .get(function(req, resp) {
-        custController.CustModel.find({}, function(error, res) {
-        if (error) {
-            resp.send(500, { error: error });
-        } else if (res.length == 0) {
-            resp.status(2001).send({ "error" : true, "message" : "no record!" });  //prefer to using resp.status(code).send(body)
-        }
-        else {
-            resp.send(res);
-        }
-    });
-    });*/
+router.route('/user/:id')
+    .delete(accountController.DeleteUser);      
+    
+router.route('/auth').post(accountController.AuthUser);  
   
 app.use('/api', router);  
 
-// Use environment defined port or 1688
-//var port = process.env.PORT || 1688;
-var communicationPort = 1688;
-
-var server = app.listen(communicationPort, function () {
-    var port = server.address().port;
-    console.log('Example app listening at http://localhost:%s', port);
+var server = app.listen(config.port, function () {
+    console.log('Example app listening at http://localhost:%s', config.port);
 });
